@@ -1,151 +1,147 @@
-Perfect! Here’s a **ready-to-copy `README.md`** for your project. I’ve cleaned it so you can **just copy and paste it** into your repo — it’s polished, professional, and CV/portfolio-ready.
+# AI-Powered Resume & Job Matching System
+
+An intelligent recruitment tool that matches resumes to job descriptions using semantic NLP embeddings, skill gap analysis, and multi-job ranking — built with Hugging Face Transformers and Gradio.
 
 ---
 
-```markdown
-# AI Study Group Matcher System
+## What It Does
 
-**AI-powered Resume & Job Matching System with Dynamic Skill Gap Analysis**
+Most resume matching tools just search for keyword overlap. This system uses **sentence embeddings** to understand the *meaning* behind both the resume and job description — matching candidates to roles even when exact keywords don't align.
 
----
-
-## 🔹 Project Overview
-
-The **AI Study Group Matcher System** is a full-stack application that matches resumes to job descriptions using **state-of-the-art NLP embeddings**. Unlike traditional resume-matchers, this system dynamically extracts skills from each resume and job description, highlights **matched and missing skills**, and provides a **human-readable explanation** for each match.
-
-**Key Features:**
-- Upload multiple resumes (PDF) and a job description dataset (CSV/Excel)
-- Automatically extract skills from resumes and jobs
-- Compute similarity using NLP embeddings (SentenceTransformer)
-- Rank top matching jobs per candidate
-- Provide **explainable match reports** showing:
-  - Match score (%)
-  - Matched skills
-  - Missing skills
+### Features
+- **Semantic Matching** — Uses `all-MiniLM-L6-v2` sentence embeddings and cosine similarity to score resume-job compatibility beyond simple keyword matching
+- **Skill Gap Analysis** — Identifies exactly which skills from the job description are present in the resume and which are missing
+- **Multi-Job Ranking** — Upload one resume against multiple job descriptions and get a ranked list of best-fit roles
+- **PDF Support with OCR Fallback** — Extracts text from any PDF resume, including scanned documents using OCR
+- **Batch Resume Processing** — Upload and evaluate multiple resumes simultaneously
 
 ---
 
-## 🔹 Project Structure
+## How to Use
 
+### Input
+| Field | Format | Description |
+|---|---|---|
+| Resumes | PDF (multiple) | Candidate resumes to evaluate |
+| Job Descriptions | CSV or Excel | Must contain `job_title` and `job_description` columns |
+
+### Output
+- Similarity score for each resume-job pair
+- Top 3 matched jobs per resume
+- Skill gap breakdown: matched skills vs missing skills
+
+### Job Description File Format
+Your CSV/Excel file must have these columns:
+```
+job_title          | job_description
+-------------------|-----------------------------
+Data Scientist     | We are looking for...
+NLP Engineer       | Strong Python and NLP...
 ```
 
-AI_STUDY_GROUP_MATCHER_SYSTEM/
-│
-├─ backend/
-│   └─ app/
-│       ├─ main.py                # Entry point (API / Gradio backend)
-│       ├─ models/
-│       │   └─ embedding_model.py # Load NLP embedding model
-│       ├─ services/
-│       │   ├─ resume_parser.py        # Extract resume text (PDF + OCR)
-│       │   ├─ job_loader.py           # Load job CSV/Excel
-│       │   ├─ skill_extractor.py      # Dynamic skill extraction
-│       │   ├─ matcher.py              # Compute similarity & rank jobs
-│       │   └─ explanation_engine.py   # Generate match explanations
-│       └─ utils/
-│           ├─ text_cleaner.py        # Text preprocessing helpers
-│           └─ similarity.py          # Cosine similarity helper
-│
-├─ data/                             # Sample resumes & job descriptions
-├─ frontend/
-│   └─ gradio_interface.py            # Gradio UI for user interaction
-├─ requirements.txt
-├─ README.md
-└─ .gitignore
+---
 
-````
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Embeddings | `sentence-transformers` — `all-MiniLM-L6-v2` |
+| Similarity | `scikit-learn` cosine similarity |
+| PDF Extraction | `PyMuPDF (fitz)` + `pytesseract` OCR |
+| NLP Preprocessing | `NLTK` — tokenization, stopword removal |
+| UI | `Gradio` |
+| Language | Python 3.10+ |
 
 ---
 
-## 🔹 Technology Stack
-
-- **Backend:** Python, FastAPI / Gradio  
-- **NLP & ML:** SentenceTransformers (`all-MiniLM-L6-v2`), scikit-learn  
-- **Data Processing:** Pandas, NLTK  
-- **OCR:** PyMuPDF, Pytesseract  
-- **Frontend:** Gradio for interactive UI  
-
----
-
-## 🔹 How It Works
-
-1. **Resume Upload:** Users upload one or more resumes (PDF).  
-2. **Job Upload:** Users upload a job dataset (CSV/Excel) containing job titles and descriptions.  
-3. **Text Extraction:**  
-   - PDFs are parsed for text using PyMuPDF.  
-   - OCR is applied automatically if text is missing.  
-4. **Dynamic Skill Extraction:**  
-   - Skills are extracted from each resume and job description dynamically.  
-   - Stopwords and common words are automatically removed using NLTK.  
-5. **Embedding & Matching:**  
-   - Resume and job texts are converted to embeddings.  
-   - Cosine similarity is computed to rank top matching jobs.  
-6. **Explainable Match Reports:**  
-   - Matched skills  
-   - Missing skills  
-   - Match score percentage  
-   - Shown to the user via Gradio UI  
-
----
-
-## 🔹 Installation & Setup
-
-1. **Clone the repository:**
+## Installation & Local Run
 
 ```bash
-git clone https://github.com/yourusername/ai-study-group-matcher.git
-cd ai-study-group-matcher
-````
+# Clone the repository
+git clone https://github.com/your-username/resume-job-matcher
+cd resume-job-matcher
 
-2. **Install dependencies:**
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
+
+# Run the app
+python app.py
 ```
 
-3. **Run the Gradio frontend:**
-
-```bash
-python frontend/gradio_interface.py
-```
-
-4. **Open the Gradio link** provided in the terminal to start matching resumes to jobs.
+Then open `http://localhost:7860` in your browser.
 
 ---
 
-## 🔹 Example Usage
-
-Upload resumes and job file in Gradio UI.
-The system outputs top 3 job matches per resume with:
+## Requirements
 
 ```
-Match Score: 75%
-Matched Skills: ['Python', 'Machine Learning']
-Missing Skills: ['AWS', 'SQL']
+gradio
+sentence-transformers
+scikit-learn
+pandas
+nltk
+pymupdf
+pytesseract
+Pillow
+openpyxl
 ```
 
 ---
 
-## 🔹 Key Achievements
+## How It Works
 
-* Built a **dynamic skill extraction pipeline** per resume and job description
-* Developed **explainable AI matching reports** for better user insights
-* Integrated **OCR fallback** for scanned PDFs
-* Designed a **full-stack modular architecture** suitable for production
-* Ready to **deploy on HuggingFace Spaces or cloud servers**
+```
+Resume PDF → Text Extraction → Preprocessing → Embedding Vector
+                                                        ↓
+Job Description CSV → Preprocessing → Embedding Vectors → Cosine Similarity → Ranked Results
+                                                        ↓
+                                              Skill Gap Analysis
+```
+
+1. **Text Extraction** — Resume text is extracted from PDF. If the PDF is scanned/image-based, OCR is applied automatically.
+2. **Preprocessing** — Text is lowercased, punctuation removed, and stopwords filtered.
+3. **Embedding** — Both resume and job description texts are converted to dense semantic vectors using `all-MiniLM-L6-v2`.
+4. **Similarity Scoring** — Cosine similarity is computed between the resume vector and all job vectors.
+5. **Skill Gap Analysis** — A curated skills dictionary is used to extract and compare skills present in both documents.
+6. **Ranking** — Jobs are sorted by similarity score and the top matches are returned with explanations.
 
 ---
 
-## 🔹 Future Enhancements
+## Example Output
 
-* Add **company-specific weighting** for skill importance
-* Integrate **vector database** for scalable large dataset matching
-* Allow **resume score normalization** across multiple candidates
-* Include **experience level matching** and certifications
+```
+Resume: john_doe_resume.pdf
+  → Job: NLP Engineer        | Similarity: 0.8921
+      Matched Skills: python, nlp, transformers, fastapi
+      Missing Skills: docker, aws, kubernetes
+
+  → Job: Data Scientist      | Similarity: 0.7643
+      Matched Skills: python, scikit-learn, pandas
+      Missing Skills: spark, tableau, sql
+
+  → Job: ML Engineer         | Similarity: 0.7102
+      Matched Skills: python, pytorch, machine learning
+      Missing Skills: mlflow, docker, terraform
+```
 
 ---
 
-## 🔹 Author
+## Roadmap
 
-Omar Z.
-AI Software Engineer & Full-Stack ML Developer
+- [ ] Upgrade to `BAAI/bge-large-en-v1.5` for improved domain accuracy
+- [ ] Resume improvement suggestions based on job description
+- [ ] ATS compatibility score
+- [ ] Interactive web dashboard with visual skill charts
+- [ ] REST API endpoint for integration with recruitment platforms
+
+---
+
+## Author
+
+**Omar Zbadani** — AI & Data Science Engineer
+
+---
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
