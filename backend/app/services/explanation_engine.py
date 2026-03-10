@@ -1,6 +1,6 @@
 # services/explanation_engine.py
 
-from .skill_extractor import extract_skills_from_text, compare_skills
+from .skill_extraction import extract_skills_from_text, compare_skills
 
 def generate_match_explanation(resume_text, job_object, top_n_skills=20):
     """

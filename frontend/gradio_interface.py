@@ -1,9 +1,9 @@
 import gradio as gr
-from backend.app.resume_parser import extract_text_from_pdf
-from backend.app.job_loader import load_job_file
-from backend.app.matcher import rank_jobs
-from backend.app.models.embedding_model import load_model
-from backend.app.explanation_engine import generate_explanation
+from backend.app.services.resume_praser import extract_text_from_pdf
+from backend.app.services.job_loader import load_job_file
+from backend.app.services.matcher import rank_jobs
+from backend.app.models.embedding_models import load_model
+from backend.app.services.explanation_engine import generate_explanation
 
 model = load_model()
 
